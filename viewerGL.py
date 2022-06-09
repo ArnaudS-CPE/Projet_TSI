@@ -5,6 +5,7 @@ import glfw
 import pyrr
 import numpy as np
 from cpe3d import Object3D
+from time import sleep
 
 class ViewerGL:
     def __init__(self):
@@ -153,8 +154,13 @@ class ViewerGL:
 
 
         #Tir
-        #if glfw.KEY_LEFT_CONTROL in self.touch and self.touch[glfw.KEY_LEFT_CONTROL] > 0:
+        #if glfw.KEY_T in self.touch and self.touch[glfw.KEY_T] > 0:
         #    print("tir")
+        #    self.objs[0].transformation.translation -= \
+        #        pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[0].transformation.rotation_euler), pyrr.Vector3([0, 0, 0.02]))
+        #    sleep(0.1)
+        #    self.objs[0].transformation.translation += \
+        #        pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[0].transformation.rotation_euler), pyrr.Vector3([0, 0, 0.02]))
 
 
 
