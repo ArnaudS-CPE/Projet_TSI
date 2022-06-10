@@ -5,13 +5,14 @@ from cpe3d import Object3D, Camera, Transformation3D, Text
 import numpy as np
 import OpenGL.GL as GL
 import pyrr
+import random
 
 
 def main():
     viewer = ViewerGL()
 
     viewer.set_camera(Camera())
-    viewer.cam.transformation.translation.y = 2
+    #viewer.cam.transformation.translation.y = 2
     viewer.cam.transformation.rotation_center = viewer.cam.transformation.translation.copy()
     viewer.cam.transformation.rotation_euler[pyrr.euler.index().yaw] += 0
     program3d_id = glutils.create_program_from_file('shader.vert', 'shader.frag')
@@ -57,7 +58,10 @@ def main():
 
     #Ennemi
     m = Mesh()
-    p0, p1, p2, p3 = [-0.5, 2, 0], [0.5, 2, 0], [0.5, 0, 0], [-0.5, 0, 0]
+    x_ennemi = random.uniform(-23, 23)
+    z_ennemi = random.uniform(-23, 23)
+
+    p0, p1, p2, p3 = [x_ennemi, 2, z_ennemi], [x_ennemi+1, 2, z_ennemi], [x_ennemi+1, 0, z_ennemi], [x_ennemi, 0, z_ennemi]
     n, c = [0, 1, 0], [1, 1, 1]
     t0, t1, t2, t3 = [0, 0], [1, 0], [1, 1], [0, 1]
     m.vertices = np.array([[p0 + n + c + t0], [p1 + n + c + t1], [p2 + n + c + t2], [p3 + n + c + t3]], np.float32)

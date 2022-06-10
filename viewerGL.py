@@ -119,39 +119,49 @@ class ViewerGL:
             self.cam.transformation.translation = self.objs[0].transformation.translation + pyrr.Vector3([0, 1, 5])
 
 
+
+
         if glfw.KEY_W in self.touch and self.touch[glfw.KEY_W] > 0:
             self.objs[0].transformation.translation += \
-                pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[0].transformation.rotation_euler), pyrr.Vector3([0, 0, 0.2]))
+                pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[0].transformation.rotation_euler), pyrr.Vector3([0, 0, 0.1]))
             centrer_cam()
+
         if glfw.KEY_S in self.touch and self.touch[glfw.KEY_S] > 0:
             self.objs[0].transformation.translation -= \
-                pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[0].transformation.rotation_euler), pyrr.Vector3([0, 0, 0.02]))
+                pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[0].transformation.rotation_euler), pyrr.Vector3([0, 0, 0.1]))
             centrer_cam()
+
         if glfw.KEY_A in self.touch and self.touch[glfw.KEY_A] > 0:
             self.objs[0].transformation.translation += \
-                pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[0].transformation.rotation_euler), pyrr.Vector3([0.02, 0, 0]))
+                pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[0].transformation.rotation_euler), pyrr.Vector3([0.06, 0, 0]))
             centrer_cam()
+
         if glfw.KEY_D in self.touch and self.touch[glfw.KEY_D] > 0:
             self.objs[0].transformation.translation -= \
-                pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[0].transformation.rotation_euler), pyrr.Vector3([0.02, 0, 0]))
+                pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[0].transformation.rotation_euler), pyrr.Vector3([0.06, 0, 0]))
             centrer_cam()
+
 
 
 
         if glfw.KEY_UP in self.touch and self.touch[glfw.KEY_UP] > 0:
             if self.cam.transformation.rotation_euler[pyrr.euler.index().roll] > -np.pi/10: #limites du déplacement de la caméra
                 self.cam.transformation.rotation_euler[pyrr.euler.index().roll] -= 0.04
-                self.objs[0].transformation.rotation_euler[pyrr.euler.index().roll] -= 0.04
+                #self.objs[0].transformation.rotation_euler[pyrr.euler.index().roll] -= 0.04
+
         if glfw.KEY_DOWN in self.touch and self.touch[glfw.KEY_DOWN] > 0:
             if self.cam.transformation.rotation_euler[pyrr.euler.index().roll] < np.pi/3: #limites du déplacement de la caméra
                 self.cam.transformation.rotation_euler[pyrr.euler.index().roll] += 0.04
-                self.objs[0].transformation.rotation_euler[pyrr.euler.index().roll] += 0.04
+                #self.objs[0].transformation.rotation_euler[pyrr.euler.index().roll] += 0.04
+
         if glfw.KEY_LEFT in self.touch and self.touch[glfw.KEY_LEFT] > 0:
             self.cam.transformation.rotation_euler[pyrr.euler.index().yaw] -= 0.04
             self.objs[0].transformation.rotation_euler[pyrr.euler.index().yaw] -= 0.04
+
         if glfw.KEY_RIGHT in self.touch and self.touch[glfw.KEY_RIGHT] > 0:
             self.cam.transformation.rotation_euler[pyrr.euler.index().yaw] += 0.04
             self.objs[0].transformation.rotation_euler[pyrr.euler.index().yaw] += 0.04
+
 
 
 
