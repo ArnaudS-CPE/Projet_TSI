@@ -141,9 +141,11 @@ class ViewerGL:
         if glfw.KEY_UP in self.touch and self.touch[glfw.KEY_UP] > 0:
             if self.cam.transformation.rotation_euler[pyrr.euler.index().roll] > -np.pi/10: #limites du déplacement de la caméra
                 self.cam.transformation.rotation_euler[pyrr.euler.index().roll] -= 0.04
+                self.objs[0].transformation.rotation_euler[pyrr.euler.index().roll] -= 0.04
         if glfw.KEY_DOWN in self.touch and self.touch[glfw.KEY_DOWN] > 0:
             if self.cam.transformation.rotation_euler[pyrr.euler.index().roll] < np.pi/3: #limites du déplacement de la caméra
                 self.cam.transformation.rotation_euler[pyrr.euler.index().roll] += 0.04
+                self.objs[0].transformation.rotation_euler[pyrr.euler.index().roll] += 0.04
         if glfw.KEY_LEFT in self.touch and self.touch[glfw.KEY_LEFT] > 0:
             self.cam.transformation.rotation_euler[pyrr.euler.index().yaw] -= 0.04
             self.objs[0].transformation.rotation_euler[pyrr.euler.index().yaw] -= 0.04
