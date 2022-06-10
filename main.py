@@ -107,6 +107,34 @@ def main():
     o = Text(str(munition), np.array([-1, -1], np.float32), np.array([-0.7, -0.7], np.float32), vao, 2, programGUI_id, texture)
     viewer.add_object(o)
 
+    #murs
+    p0, p1, p2, p3= [-25, 0, -25], [-25, 10, -25], [25, 0, -25], [25, 10, -25]
+    n, c = [0, 1, 0], [1, 1, 1]
+    t0, t1, t2, t3 = [0, 0], [1, 0], [1, 1], [0, 1]
+    m.vertices = np.array([[p3 + n + c + t3], [p1 + n + c + t1], [p2 + n + c + t2],[p0 + n + c + t0]], np.float32)
+    m.faces = np.array([[1, 0, 2],[1,3,2]], np.uint32)
+    texture = glutils.load_texture('Slime2 (1).jpg')
+    o = Object3D(m.load_to_gpu(), m.get_nb_triangles(), program3d_id, texture, Transformation3D())
+    viewer.add_object(o)
+
+#toit
+    p0, p1, p2, p3= [-25, 10, -25], [25, 10, -25], [25, 10, 25], [-25, 10, 25]
+    n, c = [0, 1, 0], [1, 1, 1]
+    t0, t1, t2, t3 = [0, 0], [1, 0], [1, 1], [0, 1]
+    m.vertices = np.array([[p0 + n + c + t0], [p1 + n + c + t1], [p2 + n + c + t2], [p3 + n + c + t3]], np.float32)
+    m.faces = np.array([[0, 1, 2],[0,2,3]], np.uint32)
+    texture = glutils.load_texture('FIREBLU2.jpg')
+    o = Object3D(m.load_to_gpu(), m.get_nb_triangles(), program3d_id, texture, Transformation3D())
+    viewer.add_object(o)
+
+    #hitbox
+    m = Mesh.load_obj('cubax.obj')
+    m.normalize()
+    m.apply_matrix(pyrr.matrix44.create_from_scale([2, 2, 2, 1]))
+    tr = Transformation3D()
+    tr.translation.y = -np.amin(m.vertices, axis=0)[1]
+    tr.translation.z = -10
+    tr.rotation_center.z = 0.2
 
 
 
