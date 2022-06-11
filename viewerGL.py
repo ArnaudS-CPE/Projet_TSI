@@ -5,7 +5,8 @@ import glfw
 import pyrr
 import numpy as np
 from cpe3d import Object3D
-from time import sleep
+import random
+
 
 class ViewerGL:
     def __init__(self):
@@ -34,6 +35,7 @@ class ViewerGL:
         self.touch = {}
 
     def run(self):
+        debut = 0
         # boucle d'affichage
         while not glfw.window_should_close(self.window):
             # nettoyage de la fenêtre : fond et profondeur
@@ -48,6 +50,15 @@ class ViewerGL:
                     
                 obj.draw()
 
+
+            
+
+
+            self.init_ennemi(debut)
+            debut+=1
+            #print(debut)
+
+
             # changement de buffer d'affichage pour éviter un effet de scintillement
             glfw.swap_buffers(self.window)
             # gestion des évènements
@@ -61,8 +72,20 @@ class ViewerGL:
 
 
 
-    def tir (self, win, key, scancode, action, mods):
-        print("tir")
+
+    def init_ennemi (self, debut) :
+        rand_x = random.uniform(-23, 23)
+        rand_z = random.uniform(-23, 23)
+        rand_rot = random.uniform(-np.pi, np.pi)
+
+        if debut == 0 :
+            self.objs[2].transformation.translation += \
+                pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[0].transformation.rotation_euler), pyrr.Vector3([rand_x, 0, rand_z]))
+            self.objs[2].transformation.rotation_euler[pyrr.euler.index().yaw] += rand_rot
+
+
+
+
 
 
 
@@ -124,22 +147,22 @@ class ViewerGL:
         if glfw.KEY_W in self.touch and self.touch[glfw.KEY_W] > 0:
             self.objs[0].transformation.translation += \
                 pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[0].transformation.rotation_euler), pyrr.Vector3([0, 0, 0.1]))
-            centrer_cam()
+            #centrer_cam()
 
         if glfw.KEY_S in self.touch and self.touch[glfw.KEY_S] > 0:
             self.objs[0].transformation.translation -= \
                 pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[0].transformation.rotation_euler), pyrr.Vector3([0, 0, 0.1]))
-            centrer_cam()
+            #centrer_cam()
 
         if glfw.KEY_A in self.touch and self.touch[glfw.KEY_A] > 0:
             self.objs[0].transformation.translation += \
                 pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[0].transformation.rotation_euler), pyrr.Vector3([0.06, 0, 0]))
-            centrer_cam()
+            #centrer_cam()
 
         if glfw.KEY_D in self.touch and self.touch[glfw.KEY_D] > 0:
             self.objs[0].transformation.translation -= \
                 pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[0].transformation.rotation_euler), pyrr.Vector3([0.06, 0, 0]))
-            centrer_cam()
+            #centrer_cam()
 
 
 
@@ -162,17 +185,14 @@ class ViewerGL:
             self.cam.transformation.rotation_euler[pyrr.euler.index().yaw] += 0.04
             self.objs[0].transformation.rotation_euler[pyrr.euler.index().yaw] += 0.04
 
-
+        centrer_cam()
 
 
         #Tir
-        #if glfw.KEY_T in self.touch and self.touch[glfw.KEY_T] > 0:
-        #    print("tir")
-        #    self.objs[0].transformation.translation -= \
-        #        pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[0].transformation.rotation_euler), pyrr.Vector3([0, 0, 0.02]))
-        #    sleep(0.1)
-        #    self.objs[0].transformation.translation += \
-        #        pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[0].transformation.rotation_euler), pyrr.Vector3([0, 0, 0.02]))
+        if glfw.KEY_T in self.touch and self.touch[glfw.KEY_T] > 0:
+            print("tir")
+            print(self.objs[2].transformation.translation)
+
 
 
 
@@ -181,3 +201,8 @@ class ViewerGL:
         #    self.cam.transformation.rotation_euler[pyrr.euler.index().yaw] += np.pi
         #    self.cam.transformation.rotation_center = self.objs[0].transformation.translation + self.objs[0].transformation.rotation_center
         #    self.cam.transformation.translation = self.objs[0].transformation.translation + pyrr.Vector3([0, 1, 5])
+
+    
+        #if pyrr.matrix33.create_from_eulers(self.objs[0]) - pyrr.matrix33.create_from_eulers(self.objs[8]) < pyrr.Vector3([1, 1, 1]) :
+        #    self.objs[0].transformation.translation -= \
+        #        pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[0].transformation.rotation_euler), pyrr.Vector3([0, 0, 1]))
