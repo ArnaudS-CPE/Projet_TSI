@@ -190,8 +190,37 @@ class ViewerGL:
 
         #Tir
         if glfw.KEY_T in self.touch and self.touch[glfw.KEY_T] > 0:
-            print("tir")
-            print(self.objs[2].transformation.translation)
+            #print("tir")
+            #print(self.objs[0].transformation.rotation_euler)
+
+            #coord_vect_pos = [self.objs[0].transformation.translation[0] - self.objs[2].transformation.translation[0], self.objs[0].transformation.translation[2] - self.objs[2].transformation.translation[2]]
+            #print(coord_vect_pos)
+            #coord_vect_tir = [self.objs[0].transformation.translation[0] - np.cos((np.pi/2) - self.objs[0].transformation.rotation_euler[2]), self.objs[0].transformation.translation[2] - np.cos(self.objs[0].transformation.rotation_euler[2])]
+            #print(coord_vect_tir)
+
+            #on calcul les cooordonnées de l'ennemi par rapport au perso
+            nouv_coord = [self.objs[2].transformation.translation[0] - self.objs[0].transformation.translation[0], self.objs[2].transformation.translation[2] - self.objs[0].transformation.translation[2]]
+            #print(nouv_coord)
+            #on calcul l'angle de l'ennemi par rapport au perso
+            angle_ennemi = np.arctan(nouv_coord[0]/nouv_coord[1])
+
+            angle_tir = self.objs[0].transformation.rotation_euler[2]
+            if angle_tir > 0 :
+                while angle_tir > np.pi/2 :
+                    angle_tir -= np.pi/2
+            else :
+                while angle_tir < -np.pi/2 :
+                    angle_tir += np.pi/2
+
+            #print("tir : ", angle_tir)
+            print("ennemi : ", angle_ennemi)
+
+            if (abs(angle_tir) > abs(angle_ennemi)-0.2) and (abs(angle_tir) < abs(angle_ennemi)+0.2) :
+                print("Touché !")
+
+
+
+
 
 
 
@@ -203,6 +232,4 @@ class ViewerGL:
         #    self.cam.transformation.translation = self.objs[0].transformation.translation + pyrr.Vector3([0, 1, 5])
 
     
-        #if pyrr.matrix33.create_from_eulers(self.objs[0]) - pyrr.matrix33.create_from_eulers(self.objs[8]) < pyrr.Vector3([1, 1, 1]) :
-        #    self.objs[0].transformation.translation -= \
-        #        pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[0].transformation.rotation_euler), pyrr.Vector3([0, 0, 1]))
+
