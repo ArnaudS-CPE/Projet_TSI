@@ -217,6 +217,15 @@ class ViewerGL:
 
             if (abs(angle_tir) > abs(angle_ennemi)-0.2) and (abs(angle_tir) < abs(angle_ennemi)+0.2) :
                 print("Touché !")
+                rand_x = random.uniform(-23, 23)
+                rand_z = random.uniform(-23, 23)
+                rand_rot = random.uniform(-np.pi, np.pi)
+                self.objs[2].transformation.translation += \
+                    pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[0].transformation.rotation_euler), pyrr.Vector3([rand_x, 0, rand_z]))
+                self.objs[2].transformation.rotation_euler[pyrr.euler.index().yaw] += rand_rot
+
+
+
 
 
 
