@@ -6,7 +6,7 @@ import pyrr
 import numpy as np
 from cpe3d import Object3D
 import random
-import copy
+
 
 
 class ViewerGL:
@@ -125,7 +125,7 @@ class ViewerGL:
             self.objs[2].transformation.rotation_euler[pyrr.euler.index().yaw] += rand_rot
             #print(self.objs[2].transformation.translation)
 
-            self.objs[5].visible = False
+            #self.objs[5].visible = False
 
 
 
@@ -185,6 +185,9 @@ class ViewerGL:
         if glfw.KEY_W in self.touch and self.touch[glfw.KEY_W] > 0:
             self.objs[0].transformation.translation += \
                 pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[0].transformation.rotation_euler), pyrr.Vector3([0, 0, 0.2]))
+            self.objs[0].transformation.translation += \
+                pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[0].transformation.rotation_euler), pyrr.Vector3([0, 0.01, 0]))
+            
             #centrer_cam()
 
         if glfw.KEY_S in self.touch and self.touch[glfw.KEY_S] > 0:
@@ -229,7 +232,6 @@ class ViewerGL:
         # Tir
         if glfw.KEY_E in self.touch and self.touch[glfw.KEY_E] > 0:
 
-
             #on calcul les cooordonnées de l'ennemi par rapport au personnage
             nouv_coord = [self.objs[2].transformation.translation[0] - self.objs[0].transformation.translation[0], self.objs[2].transformation.translation[2] - self.objs[0].transformation.translation[2]]
 
@@ -250,15 +252,13 @@ class ViewerGL:
             if (abs(angle_tir) > abs(angle_ennemi)-0.2) and (abs(angle_tir) < abs(angle_ennemi)+0.2) :
                 print("Touché !")
 
-                rand_x = random.uniform(-23, 23)
-                rand_z = random.uniform(-23, 23)
+                #rand_x = random.uniform(-23, 23)
+                #rand_z = random.uniform(-23, 23)
                 rand_rot = random.uniform(-np.pi, np.pi)
                 self.objs[2].transformation.rotation_euler[pyrr.euler.index().yaw] += rand_rot
 
             #for i in range (len(self.objs)) :
             #    print(self.objs[i])
-
-
 
 
 

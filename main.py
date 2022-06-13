@@ -22,12 +22,13 @@ def main():
 
 
 
-    m = Mesh.load_obj('stegosaurus.obj')
+    m = Mesh.load_obj('perso2.obj')
     m.normalize()
-    m.apply_matrix(pyrr.matrix44.create_from_scale([1.5, 1.5, 1.5, 1]))
+    m.apply_matrix(pyrr.matrix44.create_from_scale([0.8, 0.8, 0.8, 1]))
     tr = Transformation3D()
     tr.translation.y = -np.amin(m.vertices, axis=0)[1]
     tr.translation.z = -3
+    tr.rotation_center.y = np.pi/2
     tr.rotation_center.z = 1
     texture = glutils.load_texture('stegosaurus.jpg')
     o = Object3D(m.load_to_gpu(), m.get_nb_triangles(), program3d_id, texture, tr)
@@ -67,7 +68,7 @@ def main():
 
     m = Mesh.load_obj('stegosaurus.obj')
     m.normalize()
-    m.apply_matrix(pyrr.matrix44.create_from_scale([1.5, 1.5, 1.5, 1]))
+    m.apply_matrix(pyrr.matrix44.create_from_scale([3, 3, 3, 1]))
     tr = Transformation3D()
     tr.translation.y = -np.amin(m.vertices, axis=0)[1]
     #tr.translation.z = -3
@@ -88,6 +89,7 @@ def main():
 
 
     #murs
+    m = Mesh()
     p0, p1, p2, p3= [-25, 0, -25], [-25, 10, -25], [25, 0, -25], [25, 10, -25]
     n, c = [0, 1, 0], [1, 1, 1]
     t0, t1, t2, t3 = [0, 0], [1, 0], [1, 1], [0, 1]
@@ -118,10 +120,10 @@ def main():
 
 
     # Texte victoire
-    vao = Text.initalize_geometry()    
-    texture = glutils.load_texture('fontB.jpg')
-    o = Text('VICTOIRE !', np.array([-0.6, -0.2], np.float32), np.array([0.6, 0.2], np.float32), vao, 2, programGUI_id, texture)
-    viewer.add_object(o)
+    # vao = Text.initalize_geometry()    
+    # texture = glutils.load_texture('fontB.jpg')
+    # o = Text('VICTOIRE !', np.array([-0.6, -0.2], np.float32), np.array([0.6, 0.2], np.float32), vao, 2, programGUI_id, texture)
+    # viewer.add_object(o)
 
 
 
