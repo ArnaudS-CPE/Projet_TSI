@@ -42,6 +42,7 @@ class ViewerGL:
     def run(self):
         debut = 0
         compteur = 0
+        L = [0, 0]
         # boucle d'affichage
         while not glfw.window_should_close(self.window):
             # nettoyage de la fenêtre : fond et profondeur
@@ -71,21 +72,36 @@ class ViewerGL:
             # Déplacement de l'ennemi
 
             timer = glfw.get_time()
-            print(compteur)
+
             if timer <= (3 + (compteur*12)) :
                 self.objs[2].transformation.translation += \
-                    pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[2].transformation.rotation_euler), pyrr.Vector3([0, 0, 0.03]))
+                    pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[2].transformation.rotation_euler), pyrr.Vector3([0, 0, 0.05]))
+                #self.objs[2].transformation.rotation_euler[pyrr.euler.index().yaw] += np.pi/2
+                c = 1
             elif (timer > 3+(compteur*12)) and (timer <= 6+(compteur*12)) :
                 self.objs[2].transformation.translation += \
-                    pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[2].transformation.rotation_euler), pyrr.Vector3([0.03, 0, 0]))      
+                    pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[2].transformation.rotation_euler), pyrr.Vector3([0, 0, 0.05]))      
+                #self.objs[2].transformation.rotation_euler[pyrr.euler.index().yaw] += np.pi/2
+                c = 2
             elif (timer > 6+(compteur*12)) and (timer <= 9+(compteur*12)) :
-                self.objs[2].transformation.translation -= \
-                    pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[2].transformation.rotation_euler), pyrr.Vector3([0, 0, 0.03]))      
+                self.objs[2].transformation.translation += \
+                    pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[2].transformation.rotation_euler), pyrr.Vector3([0, 0, 0.05]))      
+                #self.objs[2].transformation.rotation_euler[pyrr.euler.index().yaw] += np.pi/2
+                c = 3
             elif (timer > 9+(compteur*12)) and (timer <= 12+(compteur*12)) :
-                self.objs[2].transformation.translation -= \
-                    pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[2].transformation.rotation_euler), pyrr.Vector3([0.03, 0, 0]))      
+                self.objs[2].transformation.translation += \
+                    pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[2].transformation.rotation_euler), pyrr.Vector3([0, 0, 0.05]))      
+                #self.objs[2].transformation.rotation_euler[pyrr.euler.index().yaw] += np.pi/2
+                c = 4
             else :
                 compteur += 1
+
+            L[0] = L[1]
+            L[1] = c
+
+            if (L[0] < L[1]) or (L[0] == 4 and L[1] == 1) :
+                self.objs[2].transformation.rotation_euler[pyrr.euler.index().yaw] += np.pi/2
+
             print(glfw.get_time())
 
 
@@ -178,12 +194,12 @@ class ViewerGL:
 
         if glfw.KEY_W in self.touch and self.touch[glfw.KEY_W] > 0:
             self.objs[0].transformation.translation += \
-                pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[0].transformation.rotation_euler), pyrr.Vector3([0, 0, 0.1]))
+                pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[0].transformation.rotation_euler), pyrr.Vector3([0, 0, 0.2]))
             #centrer_cam()
 
         if glfw.KEY_S in self.touch and self.touch[glfw.KEY_S] > 0:
             self.objs[0].transformation.translation -= \
-                pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[0].transformation.rotation_euler), pyrr.Vector3([0, 0, 0.1]))
+                pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[0].transformation.rotation_euler), pyrr.Vector3([0, 0, 0.2]))
             #centrer_cam()
 
         if glfw.KEY_A in self.touch and self.touch[glfw.KEY_A] > 0:
@@ -248,7 +264,7 @@ class ViewerGL:
                 print("Touché !")
 
                 coord_ennemi_debut = [self.objs[2].transformation.translation[0], self.objs[2].transformation.translation[2]]
-                print("debut  ", coord_ennemi_debut)
+                #print("debut  ", coord_ennemi_debut)
 
                 #l'ennemi retourne au centre...
                 #self.objs[2].transformation.translation += \
@@ -262,6 +278,7 @@ class ViewerGL:
                 #    pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[2].transformation.rotation_euler), pyrr.Vector3([rand_x - coord_ennemi_debut[0], 0, rand_z - coord_ennemi_debut[1]]))
                 #print(coord_ennemi_debut[0] - self.objs[2].transformation.translation[0], coord_ennemi_debut[1] - self.objs[2].transformation.translation[2])
                 self.objs[2].transformation.rotation_euler[pyrr.euler.index().yaw] += rand_rot
+                #self.objs[2].visible = False
 
 
 
