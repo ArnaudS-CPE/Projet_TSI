@@ -39,7 +39,7 @@ def main():
     texture = glutils.load_texture('stegosaurus.jpg')
     o = Object3D(m.load_to_gpu(), m.get_nb_triangles(), program3d_id, texture, tr)
     viewer.add_object(o)
-    print(m)
+    #print(m)
 
 
 

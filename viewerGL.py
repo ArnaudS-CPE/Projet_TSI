@@ -6,6 +6,7 @@ import pyrr
 import numpy as np
 from cpe3d import Object3D
 import random
+import copy
 
 
 class ViewerGL:
@@ -34,14 +35,19 @@ class ViewerGL:
         self.objs = []
         self.touch = {}
 
+
+
+
+
     def run(self):
         debut = 0
+        compteur = 0
         # boucle d'affichage
         while not glfw.window_should_close(self.window):
             # nettoyage de la fenêtre : fond et profondeur
             GL.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT)
             
-            self.update_key()
+            #self.update_key(debut)
 
             for obj in self.objs:
                 GL.glUseProgram(obj.program)
@@ -55,8 +61,32 @@ class ViewerGL:
 
 
             self.init_ennemi(debut)
+
+            self.update_key(debut)
+
             debut+=1
             #print(debut)
+
+
+            # Déplacement de l'ennemi
+
+            timer = glfw.get_time()
+            print(compteur)
+            if timer <= (3 + (compteur*12)) :
+                self.objs[2].transformation.translation += \
+                    pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[2].transformation.rotation_euler), pyrr.Vector3([0, 0, 0.01]))
+            elif (timer > 3+(compteur*12)) and (timer <= 6+(compteur*12)) :
+                self.objs[2].transformation.translation += \
+                    pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[2].transformation.rotation_euler), pyrr.Vector3([0.01, 0, 0]))      
+            elif (timer > 6+(compteur*12)) and (timer <= 9+(compteur*12)) :
+                self.objs[2].transformation.translation -= \
+                    pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[2].transformation.rotation_euler), pyrr.Vector3([0, 0, 0.01]))      
+            elif (timer > 9+(compteur*12)) and (timer <= 12+(compteur*12)) :
+                self.objs[2].transformation.translation -= \
+                    pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[2].transformation.rotation_euler), pyrr.Vector3([0.01, 0, 0]))      
+            else :
+                compteur += 1
+            print(glfw.get_time())
 
 
             # changement de buffer d'affichage pour éviter un effet de scintillement
@@ -73,6 +103,8 @@ class ViewerGL:
 
 
 
+
+
     def init_ennemi (self, debut) :
         rand_x = random.uniform(-23, 23)
         rand_z = random.uniform(-23, 23)
@@ -82,8 +114,7 @@ class ViewerGL:
             self.objs[2].transformation.translation += \
                 pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[0].transformation.rotation_euler), pyrr.Vector3([rand_x, 0, rand_z]))
             self.objs[2].transformation.rotation_euler[pyrr.euler.index().yaw] += rand_rot
-
-
+            #print(self.objs[2].transformation.translation)
 
 
 
@@ -128,12 +159,13 @@ class ViewerGL:
             print("Pas de variable uniforme : projection")
         GL.glUniformMatrix4fv(loc, 1, GL.GL_FALSE, self.cam.projection)
 
-    def update_key(self):
+    def update_key(self, debut):
 
-        #if glfw.KEY_D in self.touch and self.touch[glfw.KEY_D] > 0:
-        #    self.objs[0].transformation.translation -= \
-        #        pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[0].transformation.rotation_euler), pyrr.Vector3([0.02, 0, 0]))
-
+        #print(debut)
+        #coordonnées de l'ennemi au début
+        #if debut == 0 :
+        #coord_ennemi_debut = [self.objs[2].transformation.translation[0], self.objs[2].transformation.translation[2]]
+        #print("debut  ", coord_ennemi_debut)
         
         def centrer_cam () :
             #self.cam.transformation.rotation_euler = self.objs[0].transformation.rotation_euler.copy() 
@@ -189,19 +221,16 @@ class ViewerGL:
 
 
         #Tir
-        if glfw.KEY_T in self.touch and self.touch[glfw.KEY_T] > 0:
-            #print("tir")
-            #print(self.objs[0].transformation.rotation_euler)
+        if glfw.KEY_E in self.touch and self.touch[glfw.KEY_E] > 0:
 
-            #coord_vect_pos = [self.objs[0].transformation.translation[0] - self.objs[2].transformation.translation[0], self.objs[0].transformation.translation[2] - self.objs[2].transformation.translation[2]]
-            #print(coord_vect_pos)
-            #coord_vect_tir = [self.objs[0].transformation.translation[0] - np.cos((np.pi/2) - self.objs[0].transformation.rotation_euler[2]), self.objs[0].transformation.translation[2] - np.cos(self.objs[0].transformation.rotation_euler[2])]
-            #print(coord_vect_tir)
 
-            #on calcul les cooordonnées de l'ennemi par rapport au perso
+            #coord_ennemi_debut = [self.objs[2].transformation.translation[0], self.objs[2].transformation.translation[2]]
+            #print("debut  ", coord_ennemi_debut)
+
+            #on calcul les cooordonnées de l'ennemi par rapport au personnage
             nouv_coord = [self.objs[2].transformation.translation[0] - self.objs[0].transformation.translation[0], self.objs[2].transformation.translation[2] - self.objs[0].transformation.translation[2]]
-            #print(nouv_coord)
-            #on calcul l'angle de l'ennemi par rapport au perso
+
+            # On calcul l'angle de l'ennemi par rapport au personnage
             angle_ennemi = np.arctan(nouv_coord[0]/nouv_coord[1])
 
             angle_tir = self.objs[0].transformation.rotation_euler[2]
@@ -213,15 +242,25 @@ class ViewerGL:
                     angle_tir += np.pi/2
 
             #print("tir : ", angle_tir)
-            print("ennemi : ", angle_ennemi)
+            #print("ennemi : ", angle_ennemi)
 
             if (abs(angle_tir) > abs(angle_ennemi)-0.2) and (abs(angle_tir) < abs(angle_ennemi)+0.2) :
                 print("Touché !")
+
+                coord_ennemi_debut = [self.objs[2].transformation.translation[0], self.objs[2].transformation.translation[2]]
+                print("debut  ", coord_ennemi_debut)
+
+                #l'ennemi retourne au centre...
+                #self.objs[2].transformation.translation += \
+                #    pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[2].transformation.rotation_euler), pyrr.Vector3([coord_ennemi_debut[0], 0, coord_ennemi_debut[1]]))
+
+                #...puis se déplace à un endroit aléatoire
                 rand_x = random.uniform(-23, 23)
                 rand_z = random.uniform(-23, 23)
                 rand_rot = random.uniform(-np.pi, np.pi)
-                self.objs[2].transformation.translation += \
-                    pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[0].transformation.rotation_euler), pyrr.Vector3([rand_x, 0, rand_z]))
+                #self.objs[2].transformation.translation += \
+                #    pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[2].transformation.rotation_euler), pyrr.Vector3([rand_x - coord_ennemi_debut[0], 0, rand_z - coord_ennemi_debut[1]]))
+                #print(coord_ennemi_debut[0] - self.objs[2].transformation.translation[0], coord_ennemi_debut[1] - self.objs[2].transformation.translation[2])
                 self.objs[2].transformation.rotation_euler[pyrr.euler.index().yaw] += rand_rot
 
 
