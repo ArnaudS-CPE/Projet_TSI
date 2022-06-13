@@ -74,16 +74,16 @@ class ViewerGL:
             print(compteur)
             if timer <= (3 + (compteur*12)) :
                 self.objs[2].transformation.translation += \
-                    pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[2].transformation.rotation_euler), pyrr.Vector3([0, 0, 0.01]))
+                    pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[2].transformation.rotation_euler), pyrr.Vector3([0, 0, 0.03]))
             elif (timer > 3+(compteur*12)) and (timer <= 6+(compteur*12)) :
                 self.objs[2].transformation.translation += \
-                    pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[2].transformation.rotation_euler), pyrr.Vector3([0.01, 0, 0]))      
+                    pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[2].transformation.rotation_euler), pyrr.Vector3([0.03, 0, 0]))      
             elif (timer > 6+(compteur*12)) and (timer <= 9+(compteur*12)) :
                 self.objs[2].transformation.translation -= \
-                    pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[2].transformation.rotation_euler), pyrr.Vector3([0, 0, 0.01]))      
+                    pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[2].transformation.rotation_euler), pyrr.Vector3([0, 0, 0.03]))      
             elif (timer > 9+(compteur*12)) and (timer <= 12+(compteur*12)) :
                 self.objs[2].transformation.translation -= \
-                    pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[2].transformation.rotation_euler), pyrr.Vector3([0.01, 0, 0]))      
+                    pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[2].transformation.rotation_euler), pyrr.Vector3([0.03, 0, 0]))      
             else :
                 compteur += 1
             print(glfw.get_time())
