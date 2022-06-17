@@ -185,8 +185,8 @@ class ViewerGL:
         if glfw.KEY_W in self.touch and self.touch[glfw.KEY_W] > 0:
             self.objs[0].transformation.translation += \
                 pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[0].transformation.rotation_euler), pyrr.Vector3([0, 0, 0.2]))
-            self.objs[0].transformation.translation += \
-                pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[0].transformation.rotation_euler), pyrr.Vector3([0, 0.01, 0]))
+            #self.objs[0].transformation.translation += \
+            #    pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[0].transformation.rotation_euler), pyrr.Vector3([0, 0.01, 0]))
             
             #centrer_cam()
 

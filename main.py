@@ -22,6 +22,7 @@ def main():
 
 
 
+    # Perso
     m = Mesh.load_obj('perso2.obj')
     m.normalize()
     m.apply_matrix(pyrr.matrix44.create_from_scale([0.8, 0.8, 0.8, 1]))
@@ -33,7 +34,6 @@ def main():
     texture = glutils.load_texture('stegosaurus.jpg')
     o = Object3D(m.load_to_gpu(), m.get_nb_triangles(), program3d_id, texture, tr)
     viewer.add_object(o)
-    #print(m)
 
 
 
@@ -126,16 +126,16 @@ def main():
     # viewer.add_object(o)
 
 
-    m = Mesh.load_obj('boule.obj')
-    m.normalize()
-    m.apply_matrix(pyrr.matrix44.create_from_scale([0.2, 0.2, 0.2, 1]))
-    tr = Transformation3D()
-    tr.translation.y = 0.8
-    tr.translation.z = -5
-    tr.rotation_center.z = 1
-    texture = glutils.load_texture('stegosaurus.jpg')
-    o = Object3D(m.load_to_gpu(), m.get_nb_triangles(), program3d_id, texture, tr)
-    viewer.add_object(o)
+    # m = Mesh.load_obj('boule.obj')
+    # m.normalize()
+    # m.apply_matrix(pyrr.matrix44.create_from_scale([0.2, 0.2, 0.2, 1]))
+    # tr = Transformation3D()
+    # tr.translation.y = 0.8
+    # tr.translation.z = -5
+    # tr.rotation_center.z = 1
+    # texture = glutils.load_texture('stegosaurus.jpg')
+    # o = Object3D(m.load_to_gpu(), m.get_nb_triangles(), program3d_id, texture, tr)
+    # viewer.add_object(o)
 
 
 
