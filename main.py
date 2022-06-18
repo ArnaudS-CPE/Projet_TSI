@@ -153,10 +153,10 @@ def main():
 
 
     # Texte victoire
-    # vao = Text.initalize_geometry()    
-    # texture = glutils.load_texture('fontB.jpg')
-    # o = Text('VICTOIRE !', np.array([-0.6, -0.2], np.float32), np.array([0.6, 0.2], np.float32), vao, 2, programGUI_id, texture)
-    # viewer.add_object(o)
+    vao = Text.initalize_geometry()    
+    texture = glutils.load_texture('fontB.jpg')
+    o = Text('VICTOIRE !', np.array([-0.6, -0.2], np.float32), np.array([0.6, 0.2], np.float32), vao, 2, programGUI_id, texture)
+    viewer.add_object(o)
 
 
     # m = Mesh.load_obj('boule.obj')
