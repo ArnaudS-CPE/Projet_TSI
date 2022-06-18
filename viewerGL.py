@@ -297,7 +297,17 @@ class ViewerGL:
                     if Vie <= 0 :
                         self.objs[2].visible = False
 
+        if Vie == 3 :
+            self.objs[12].visible = False
+
+        if Vie == 2 :
+            self.objs[11].visible = False
+        
+        if Vie == 1 :
+            self.objs[10].visible = False
+
         if Vie <= 0 :
+            self.objs[9].visible = False
             self.objs[8].bottomLeft = np.array([-0.6, -0.2], np.float32)                
 
 
