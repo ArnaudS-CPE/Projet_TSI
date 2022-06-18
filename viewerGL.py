@@ -77,29 +77,28 @@ class ViewerGL:
 
             # Déplacement de l'ennemi
             timer = glfw.get_time()
-
-            # if timer <= (3 + (compteur*12)) :
-            #     self.objs[2].transformation.translation += \
-            #         pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[2].transformation.rotation_euler), pyrr.Vector3([0, 0, 0.05]))
-            #     c = 1
-            # elif (timer > 3+(compteur*12)) and (timer <= 6+(compteur*12)) :
-            #     self.objs[2].transformation.translation += \
-            #         pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[2].transformation.rotation_euler), pyrr.Vector3([0, 0, 0.05]))      
-            #     c = 2
-            # elif (timer > 6+(compteur*12)) and (timer <= 9+(compteur*12)) :
-            #     self.objs[2].transformation.translation += \
-            #         pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[2].transformation.rotation_euler), pyrr.Vector3([0, 0, 0.05]))      
-            #     c = 3
-            # elif (timer > 9+(compteur*12)) and (timer <= 12+(compteur*12)) :
-            #     self.objs[2].transformation.translation += \
-            #         pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[2].transformation.rotation_euler), pyrr.Vector3([0, 0, 0.05]))      
-            #     c = 4
-            # else :
-            #     compteur += 1
+            if timer <= (3 + (compteur*12)) :
+                self.objs[2].transformation.translation += \
+                    pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[2].transformation.rotation_euler), pyrr.Vector3([0, 0, 0.05]))
+                c = 1
+            elif (timer > 3+(compteur*12)) and (timer <= 6+(compteur*12)) :
+                self.objs[2].transformation.translation += \
+                    pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[2].transformation.rotation_euler), pyrr.Vector3([0, 0, 0.05]))      
+                c = 2
+            elif (timer > 6+(compteur*12)) and (timer <= 9+(compteur*12)) :
+                self.objs[2].transformation.translation += \
+                    pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[2].transformation.rotation_euler), pyrr.Vector3([0, 0, 0.05]))      
+                c = 3
+            elif (timer > 9+(compteur*12)) and (timer <= 12+(compteur*12)) :
+                self.objs[2].transformation.translation += \
+                    pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[2].transformation.rotation_euler), pyrr.Vector3([0, 0, 0.05]))      
+                c = 4
+            else :
+                compteur += 1
 
             # Teste si l'ennemi doit tourner
-            #L[0] = L[1]
-            #L[1] = c
+            L[0] = L[1]
+            L[1] = c
             if (L[0] < L[1]) or (L[0] == 4 and L[1] == 1) :
                 self.objs[2].transformation.rotation_euler[pyrr.euler.index().yaw] += np.pi/2
 
@@ -259,7 +258,7 @@ class ViewerGL:
 
             # Fréquence de tir
             freq = True
-            if ((glfw.get_time() - T) < 0.3) : # On test la durée entre 2 tirs
+            if ((glfw.get_time() - T) < 0.2) : # On test la durée entre 2 tirs
                 freq = False
             T = glfw.get_time()
 
@@ -299,13 +298,10 @@ class ViewerGL:
 
         if Vie == 3 :
             self.objs[12].visible = False
-
         if Vie == 2 :
             self.objs[11].visible = False
-        
         if Vie == 1 :
             self.objs[10].visible = False
-
         if Vie <= 0 :
             self.objs[9].visible = False
             self.objs[8].bottomLeft = np.array([-0.6, -0.2], np.float32)                

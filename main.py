@@ -22,7 +22,7 @@ def main():
 
 
 
-    # Perso
+    # Personnage
     m = Mesh.load_obj('perso2.obj')
     m.normalize()
     m.apply_matrix(pyrr.matrix44.create_from_scale([0.8, 0.8, 0.8, 1]))
@@ -37,7 +37,7 @@ def main():
 
 
 
-    #sol
+    # Sol
     m = Mesh()
     p0, p1, p2, p3 = [-25, 0, -25], [25, 0, -25], [25, 0, 25], [-25, 0, 25]
     n, c = [0, 1, 0], [1, 1, 1]
@@ -51,21 +51,7 @@ def main():
 
 
 
-    #Ennemi
-    # m = Mesh()
-    # p0, p1, p2, p3 = [-0.5, 2, 0], [0.5, 2, 0], [0.5, 0, 0], [-0.5, 0, 0]
-    # n, c = [0, 1, 0], [1, 1, 1]
-    # t0, t1, t2, t3 = [0, 0], [1, 0], [1, 1], [0, 1]
-    # m.vertices = np.array([[p0 + n + c + t0], [p1 + n + c + t1], [p2 + n + c + t2], [p3 + n + c + t3]], np.float32)
-    # m.faces = np.array([[0, 1, 2], [0, 2, 3]], np.uint32)
-    # texture = glutils.load_texture('grass.jpg')
-    # o = Object3D(m.load_to_gpu(), m.get_nb_triangles(), program3d_id, texture, Transformation3D())
-    # viewer.add_object(o)
-
-
-
-###########################
-
+    # Ennemi
     m = Mesh.load_obj('stegosaurus.obj')
     m.normalize()
     m.apply_matrix(pyrr.matrix44.create_from_scale([3, 3, 3, 1]))
@@ -78,19 +64,11 @@ def main():
     viewer.add_object(o)
 
 
-###########################
-
-
-
-
-
-
-
 
 
     # Murs
     m = Mesh()
-    p0, p1, p2, p3= [-25, 0, -25], [-25, 10, -25], [25, 0, -25], [25, 10, -25]
+    p0, p1, p2, p3= [-25, 0, -25], [25, 0, -25], [-25, 10, -25], [25, 10, -25]
     n, c = [0, 1, 0], [1, 1, 1]
     t0, t1, t2, t3 = [0, 0], [1, 0], [1, 1], [0, 1]
     m.vertices = np.array([[p3 + n + c + t3], [p1 + n + c + t1], [p2 + n + c + t2],[p0 + n + c + t0]], np.float32)
@@ -100,7 +78,7 @@ def main():
     viewer.add_object(o)
 
     m = Mesh()
-    p0, p1, p2, p3= [25, 0, 25], [25, 10, 25], [-25, 0, 25], [-25, 10, 25]
+    p0, p1, p2, p3= [25, 0, 25], [-25, 0, 25], [25, 10, 25], [-25, 10, 25]
     n, c = [0, 1, 0], [1, 1, 1]
     t0, t1, t2, t3 = [0, 0], [1, 0], [1, 1], [0, 1]
     m.vertices = np.array([[p3 + n + c + t3], [p1 + n + c + t1], [p2 + n + c + t2],[p0 + n + c + t0]], np.float32)
@@ -110,7 +88,7 @@ def main():
     viewer.add_object(o)
 
     m = Mesh()
-    p0, p1, p2, p3= [25, 0, 25], [25, 10, 25], [25, 0, -25], [25, 10, -25]
+    p0, p1, p2, p3= [25, 0, 25], [25, 0, -25], [25, 10, 25], [25, 10, -25]
     n, c = [0, 1, 0], [1, 1, 1]
     t0, t1, t2, t3 = [0, 0], [1, 0], [1, 1], [0, 1]
     m.vertices = np.array([[p3 + n + c + t3], [p1 + n + c + t1], [p2 + n + c + t2],[p0 + n + c + t0]], np.float32)
@@ -120,7 +98,7 @@ def main():
     viewer.add_object(o)
 
     m = Mesh()
-    p0, p1, p2, p3= [-25, 0, -25], [-25, 10, -25], [-25, 0, 25], [-25, 10, 25]
+    p0, p1, p2, p3= [-25, 0, -25], [-25, 0, 25], [-25, 10, -25], [-25, 10, 25]
     n, c = [0, 1, 0], [1, 1, 1]
     t0, t1, t2, t3 = [0, 0], [1, 0], [1, 1], [0, 1]
     m.vertices = np.array([[p3 + n + c + t3], [p1 + n + c + t1], [p2 + n + c + t2],[p0 + n + c + t0]], np.float32)
@@ -132,7 +110,7 @@ def main():
 
 
 
-    #toit
+    # Toit
     p0, p1, p2, p3= [-25, 10, -25], [25, 10, -25], [25, 10, 25], [-25, 10, 25]
     n, c = [0, 1, 0], [1, 1, 1]
     t0, t1, t2, t3 = [0, 0], [1, 0], [1, 1], [0, 1]
@@ -142,7 +120,7 @@ def main():
     o = Object3D(m.load_to_gpu(), m.get_nb_triangles(), program3d_id, texture, Transformation3D())
     viewer.add_object(o)
 
-    #hitbox
+    # Hitbox
     m = Mesh.load_obj('cubax.obj')
     m.normalize()
     m.apply_matrix(pyrr.matrix44.create_from_scale([2, 2, 2, 1]))
