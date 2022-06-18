@@ -103,6 +103,12 @@ class ViewerGL:
             if (L[0] < L[1]) or (L[0] == 4 and L[1] == 1) :
                 self.objs[2].transformation.rotation_euler[pyrr.euler.index().yaw] += np.pi/2
 
+            # Coeurs
+            self.objs[9].transformation.rotation_euler[pyrr.euler.index().yaw] += 0.03
+            self.objs[10].transformation.rotation_euler[pyrr.euler.index().yaw] += 0.03
+            self.objs[11].transformation.rotation_euler[pyrr.euler.index().yaw] += 0.03
+            self.objs[12].transformation.rotation_euler[pyrr.euler.index().yaw] += 0.03
+
 
             # changement de buffer d'affichage pour éviter un effet de scintillement
             glfw.swap_buffers(self.window)
@@ -125,13 +131,20 @@ class ViewerGL:
         rand_rot = random.uniform(-np.pi, np.pi)
 
         if debut == 0 :
+            # Ennemi
             self.objs[2].transformation.translation += \
                 pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[0].transformation.rotation_euler), pyrr.Vector3([rand_x, 0, rand_z]))
             self.objs[2].transformation.rotation_euler[pyrr.euler.index().yaw] += rand_rot
-            #print(self.objs[2].transformation.translation)
-
-            #self.objs[5].visible = False
-
+            # Coeurs
+            self.objs[9].transformation.translation += \
+                pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[0].transformation.rotation_euler), pyrr.Vector3([rand_x-1.5, 0, rand_z]))
+            self.objs[10].transformation.translation += \
+                pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[0].transformation.rotation_euler), pyrr.Vector3([rand_x-0.5, 0, rand_z]))
+            self.objs[11].transformation.translation += \
+                pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[0].transformation.rotation_euler), pyrr.Vector3([rand_x+0.5, 0, rand_z]))
+            self.objs[12].transformation.translation += \
+                pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[0].transformation.rotation_euler), pyrr.Vector3([rand_x+1.5, 0, rand_z]))
+            
         self.objs[8].bottomLeft = np.array([0.6, 0.2], np.float32)
 
 
@@ -178,6 +191,7 @@ class ViewerGL:
         GL.glUniformMatrix4fv(loc, 1, GL.GL_FALSE, self.cam.projection)
 
 
+
     def update_key(self, debut):
 
 
@@ -194,11 +208,6 @@ class ViewerGL:
         centrer_cam()
 
 
-        #if Vie >= 0 :
-        #    self.objs[2].visible = False
-        print(Vie)
-
-
         if glfw.KEY_W in self.touch and self.touch[glfw.KEY_W] > 0:
             self.objs[0].transformation.translation += \
                 pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[0].transformation.rotation_euler), pyrr.Vector3([0, 0, 0.2]))
@@ -213,12 +222,12 @@ class ViewerGL:
 
         if glfw.KEY_A in self.touch and self.touch[glfw.KEY_A] > 0:
             self.objs[0].transformation.translation += \
-                pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[0].transformation.rotation_euler), pyrr.Vector3([0.06, 0, 0]))
+                pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[0].transformation.rotation_euler), pyrr.Vector3([0.1, 0, 0]))
             centrer_cam()
 
         if glfw.KEY_D in self.touch and self.touch[glfw.KEY_D] > 0:
             self.objs[0].transformation.translation -= \
-                pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[0].transformation.rotation_euler), pyrr.Vector3([0.06, 0, 0]))
+                pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[0].transformation.rotation_euler), pyrr.Vector3([0.1, 0, 0]))
             centrer_cam()
 
 
@@ -243,11 +252,6 @@ class ViewerGL:
             self.cam.transformation.rotation_euler[pyrr.euler.index().yaw] += 0.04
             self.objs[0].transformation.rotation_euler[pyrr.euler.index().yaw] += 0.04
             #self.objs[6].transformation.rotation_euler[pyrr.euler.index().yaw] += 0.04
-
-        #centrer_cam()
-        #self.objs[6].transformation.rotation_center =  -self.objs[0].transformation.rotation_center
-        #self.objs[6].transformation.translation = self.objs[0].transformation.translation  
-        #self.objs[6].transformation.rotation_euler = self.objs[0].transformation.rotation_euler
 
 
         # Tir
@@ -292,6 +296,9 @@ class ViewerGL:
 
                     if Vie <= 0 :
                         self.objs[2].visible = False
+
+        if Vie <= 0 :
+            self.objs[8].bottomLeft = np.array([-0.6, -0.2], np.float32)                
 
 
 

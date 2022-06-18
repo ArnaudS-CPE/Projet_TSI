@@ -31,7 +31,7 @@ def main():
     tr.translation.z = -3
     tr.rotation_center.y = np.pi/2
     tr.rotation_center.z = 1
-    texture = glutils.load_texture('stegosaurus.jpg')
+    texture = glutils.load_texture('rouge.jpg')
     o = Object3D(m.load_to_gpu(), m.get_nb_triangles(), program3d_id, texture, tr)
     viewer.add_object(o)
 
@@ -157,6 +157,26 @@ def main():
     texture = glutils.load_texture('fontB.jpg')
     o = Text('VICTOIRE !', np.array([-0.6, -0.2], np.float32), np.array([0.6, 0.2], np.float32), vao, 2, programGUI_id, texture)
     viewer.add_object(o)
+
+
+    # Coeurs de vie
+    m = Mesh.load_obj('heart.obj')
+    m.normalize()
+    m.apply_matrix(pyrr.matrix44.create_from_scale([0.3, 0.3, 0.3, 1]))
+    vao = m.load_to_gpu()
+    texture = glutils.load_texture('rouge.jpg')
+    for i in range(4):
+        tr = Transformation3D()
+        tr.translation.y = -np.amin(m.vertices, axis=0)[1] + 3
+        #tr.translation.z = -3
+        #tr.rotation_center.y = np.pi/2
+        #tr.rotation_center.z = 1
+        o = Object3D(vao, m.get_nb_triangles(), program3d_id, texture, tr)
+        viewer.add_object(o)
+
+
+
+
 
 
     # m = Mesh.load_obj('boule.obj')
