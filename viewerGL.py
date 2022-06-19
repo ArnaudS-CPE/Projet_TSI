@@ -12,6 +12,7 @@ from time import sleep
 T = 0
 Vie = 4
 Vitesse = 0.04
+tir = False
 
 
 valRenz = True
@@ -294,6 +295,7 @@ class ViewerGL:
         global direct
         global valRenz ; global valRens
         global valRenq ; global valRend
+        global tir
 
         
         def centrer_cam () :
@@ -399,12 +401,15 @@ class ViewerGL:
 
         # Tir
         if glfw.KEY_E in self.touch and self.touch[glfw.KEY_E] > 0:
-
+            self.objs[13].visible = False
+            tir = True
             # Fréquence de tir
             freq = True
             if ((glfw.get_time() - T) < 0.2) : # On test la durée entre 2 tirs
                 freq = False
             T = glfw.get_time()
+            self.objs[13].transformation.translation = self.objs[0].transformation.translation.copy()
+            self.objs[13].transformation.rotation_euler = self.objs[0].transformation.rotation_euler.copy()
 
             #on calcul les cooordonnées de l'ennemi par rapport au personnage
             nouv_coord = [self.objs[2].transformation.translation[0] - self.objs[0].transformation.translation[0], self.objs[2].transformation.translation[2] - self.objs[0].transformation.translation[2]]
@@ -441,6 +446,9 @@ class ViewerGL:
                     if Vie <= 0 :
                         self.objs[2].visible = False
 
+        if tir==True:
+            self.objs[13].transformation.translation += \
+                pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[13].transformation.rotation_euler), pyrr.Vector3([0, 0, 3]))
 
         if Vie == 3 :
             self.objs[12].visible = False
@@ -450,7 +458,13 @@ class ViewerGL:
             self.objs[10].visible = False
         if Vie <= 0 :
             self.objs[9].visible = False
-            self.objs[8].bottomLeft = np.array([-0.6, -0.2], np.float32)                
+            self.objs[8].bottomLeft = np.array([-0.6, -0.2], np.float32)  
+    
+
+        if tir== True:
+            self.objs[13].visible = True
+
+
 
 
 
