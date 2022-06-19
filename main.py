@@ -31,7 +31,7 @@ def main():
     tr.translation.z = -3
     tr.rotation_center.y = np.pi/2
     tr.rotation_center.z = 1
-    texture = glutils.load_texture('rouge.jpg')
+    texture = glutils.load_texture('couleur_perso.jpg')
     o = Object3D(m.load_to_gpu(), m.get_nb_triangles(), program3d_id, texture, tr)
     viewer.add_object(o)
 
@@ -67,42 +67,78 @@ def main():
 
 
     # Murs
+    # arrière
     m = Mesh()
     p0, p1, p2, p3= [-25, 0, -25], [25, 0, -25], [-25, 10, -25], [25, 10, -25]
+    liste = [p0 , p1 , p2 , p3]
     n, c = [0, 1, 0], [1, 1, 1]
     t0, t1, t2, t3 = [0, 0], [1, 0], [1, 1], [0, 1]
     m.vertices = np.array([[p3 + n + c + t3], [p1 + n + c + t1], [p2 + n + c + t2],[p0 + n + c + t0]], np.float32)
     m.faces = np.array([[1, 0, 2],[1,3,2]], np.uint32)
+    i= 0
+    for k in range(0,len(liste)):
+        if liste[k][1] == 0 and i == 0:
+            i=1
+            viewer.collisions[0].append(liste[k]) #p1
+        if i == 1 and liste[k][1] == 0:
+            viewer.collisions[1].append(liste[k]) #p2
     texture = glutils.load_texture('Slime2.jpg')
     o = Object3D(m.load_to_gpu(), m.get_nb_triangles(), program3d_id, texture, Transformation3D())
     viewer.add_object(o)
 
+    # avant
     m = Mesh()
     p0, p1, p2, p3= [25, 0, 25], [-25, 0, 25], [25, 10, 25], [-25, 10, 25]
+    liste = [p0 , p1 , p2 , p3]
     n, c = [0, 1, 0], [1, 1, 1]
     t0, t1, t2, t3 = [0, 0], [1, 0], [1, 1], [0, 1]
     m.vertices = np.array([[p3 + n + c + t3], [p1 + n + c + t1], [p2 + n + c + t2],[p0 + n + c + t0]], np.float32)
     m.faces = np.array([[1, 0, 2],[1,3,2]], np.uint32)
+    i= 0
+    for k in range(0,len(liste)):
+        if liste[k][1] == 0 and i == 0:
+            i=1
+            viewer.collisions[0].append(liste[k]) #p1
+        if i == 1 and liste[k][1] == 0:
+            viewer.collisions[1].append(liste[k]) #p2
     texture = glutils.load_texture('Slime2.jpg')
     o = Object3D(m.load_to_gpu(), m.get_nb_triangles(), program3d_id, texture, Transformation3D())
     viewer.add_object(o)
 
+    # gauche
     m = Mesh()
     p0, p1, p2, p3= [25, 0, 25], [25, 0, -25], [25, 10, 25], [25, 10, -25]
+    liste = [p0 , p1 , p2 , p3]
     n, c = [0, 1, 0], [1, 1, 1]
     t0, t1, t2, t3 = [0, 0], [1, 0], [1, 1], [0, 1]
     m.vertices = np.array([[p3 + n + c + t3], [p1 + n + c + t1], [p2 + n + c + t2],[p0 + n + c + t0]], np.float32)
     m.faces = np.array([[1, 0, 2],[1,3,2]], np.uint32)
+    i= 0
+    for k in range(0,len(liste)):
+        if liste[k][1] == 0 and i == 0:
+            i=1
+            viewer.collisions[0].append(liste[k]) #p1
+        if i == 1 and liste[k][1] == 0:
+            viewer.collisions[1].append(liste[k]) #p2
     texture = glutils.load_texture('Slime2.jpg')
     o = Object3D(m.load_to_gpu(), m.get_nb_triangles(), program3d_id, texture, Transformation3D())
     viewer.add_object(o)
 
+    # droite
     m = Mesh()
     p0, p1, p2, p3= [-25, 0, -25], [-25, 0, 25], [-25, 10, -25], [-25, 10, 25]
+    liste = [p0 , p1 , p2 , p3]
     n, c = [0, 1, 0], [1, 1, 1]
     t0, t1, t2, t3 = [0, 0], [1, 0], [1, 1], [0, 1]
     m.vertices = np.array([[p3 + n + c + t3], [p1 + n + c + t1], [p2 + n + c + t2],[p0 + n + c + t0]], np.float32)
     m.faces = np.array([[1, 0, 2],[1,3,2]], np.uint32)
+    i= 0
+    for k in range(0,len(liste)):
+        if liste[k][1] == 0 and i == 0:
+            i=1
+            viewer.collisions[0].append(liste[k]) #p1
+        if i == 1 and liste[k][1] == 0:
+            viewer.collisions[1].append(liste[k]) #p2
     texture = glutils.load_texture('Slime2.jpg')
     o = Object3D(m.load_to_gpu(), m.get_nb_triangles(), program3d_id, texture, Transformation3D())
     viewer.add_object(o)
