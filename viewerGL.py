@@ -11,6 +11,7 @@ import random
 
 T = 0
 Vie = 4
+Vitesse = 0.04
 
 
 
@@ -45,6 +46,9 @@ class ViewerGL:
 
 
     def run(self):
+
+        global Vitesse
+
         debut = 0
         compteur = 0
         L = [0, 0]
@@ -64,9 +68,7 @@ class ViewerGL:
                     self.update_camera(obj.program)
                     
                 obj.draw()
-
-
-            
+ 
 
 
             self.init_ennemi(debut)
@@ -79,19 +81,51 @@ class ViewerGL:
             timer = glfw.get_time()
             if timer <= (3 + (compteur*12)) :
                 self.objs[2].transformation.translation += \
-                    pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[2].transformation.rotation_euler), pyrr.Vector3([0, 0, 0.05]))
+                    pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[2].transformation.rotation_euler), pyrr.Vector3([0, 0, Vitesse]))
+                self.objs[9].transformation.translation += \
+                    pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[2].transformation.rotation_euler), pyrr.Vector3([0, 0, Vitesse]))
+                self.objs[10].transformation.translation += \
+                    pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[2].transformation.rotation_euler), pyrr.Vector3([0, 0, Vitesse]))
+                self.objs[11].transformation.translation += \
+                    pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[2].transformation.rotation_euler), pyrr.Vector3([0, 0, Vitesse]))
+                self.objs[12].transformation.translation += \
+                    pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[2].transformation.rotation_euler), pyrr.Vector3([0, 0, Vitesse]))
                 c = 1
             elif (timer > 3+(compteur*12)) and (timer <= 6+(compteur*12)) :
                 self.objs[2].transformation.translation += \
-                    pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[2].transformation.rotation_euler), pyrr.Vector3([0, 0, 0.05]))      
+                    pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[2].transformation.rotation_euler), pyrr.Vector3([0, 0, Vitesse]))      
+                self.objs[9].transformation.translation += \
+                    pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[2].transformation.rotation_euler), pyrr.Vector3([0, 0, Vitesse]))
+                self.objs[10].transformation.translation += \
+                    pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[2].transformation.rotation_euler), pyrr.Vector3([0, 0, Vitesse]))
+                self.objs[11].transformation.translation += \
+                    pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[2].transformation.rotation_euler), pyrr.Vector3([0, 0, Vitesse]))
+                self.objs[12].transformation.translation += \
+                    pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[2].transformation.rotation_euler), pyrr.Vector3([0, 0, Vitesse]))
                 c = 2
             elif (timer > 6+(compteur*12)) and (timer <= 9+(compteur*12)) :
                 self.objs[2].transformation.translation += \
-                    pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[2].transformation.rotation_euler), pyrr.Vector3([0, 0, 0.05]))      
+                    pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[2].transformation.rotation_euler), pyrr.Vector3([0, 0, Vitesse]))      
+                self.objs[9].transformation.translation += \
+                    pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[2].transformation.rotation_euler), pyrr.Vector3([0, 0, Vitesse]))
+                self.objs[10].transformation.translation += \
+                    pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[2].transformation.rotation_euler), pyrr.Vector3([0, 0, Vitesse]))
+                self.objs[11].transformation.translation += \
+                    pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[2].transformation.rotation_euler), pyrr.Vector3([0, 0, Vitesse]))
+                self.objs[12].transformation.translation += \
+                    pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[2].transformation.rotation_euler), pyrr.Vector3([0, 0, Vitesse]))
                 c = 3
             elif (timer > 9+(compteur*12)) and (timer <= 12+(compteur*12)) :
                 self.objs[2].transformation.translation += \
-                    pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[2].transformation.rotation_euler), pyrr.Vector3([0, 0, 0.05]))      
+                    pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[2].transformation.rotation_euler), pyrr.Vector3([0, 0, Vitesse]))      
+                self.objs[9].transformation.translation += \
+                    pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[2].transformation.rotation_euler), pyrr.Vector3([0, 0, Vitesse]))
+                self.objs[10].transformation.translation += \
+                    pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[2].transformation.rotation_euler), pyrr.Vector3([0, 0, Vitesse]))
+                self.objs[11].transformation.translation += \
+                    pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[2].transformation.rotation_euler), pyrr.Vector3([0, 0, Vitesse]))
+                self.objs[12].transformation.translation += \
+                    pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[2].transformation.rotation_euler), pyrr.Vector3([0, 0, Vitesse]))
                 c = 4
             else :
                 compteur += 1
@@ -100,9 +134,14 @@ class ViewerGL:
             L[0] = L[1]
             L[1] = c
             if (L[0] < L[1]) or (L[0] == 4 and L[1] == 1) :
-                self.objs[2].transformation.rotation_euler[pyrr.euler.index().yaw] += np.pi/2
+                self.objs[2].transformation.rotation_euler[pyrr.euler.index().yaw] += random.uniform(-np.pi, np.pi)
 
-            # Coeurs
+            # Limite murs
+            if (abs(self.objs[2].transformation.translation[0]) > 23) or (abs(self.objs[2].transformation.translation[2]) > 23) :
+                self.objs[2].transformation.rotation_euler[pyrr.euler.index().yaw] += np.pi
+
+
+            # Rotation des coeurs
             self.objs[9].transformation.rotation_euler[pyrr.euler.index().yaw] += 0.03
             self.objs[10].transformation.rotation_euler[pyrr.euler.index().yaw] += 0.03
             self.objs[11].transformation.rotation_euler[pyrr.euler.index().yaw] += 0.03
@@ -125,8 +164,8 @@ class ViewerGL:
 
 
     def init_ennemi (self, debut) :
-        rand_x = random.uniform(-23, 23)
-        rand_z = random.uniform(-23, 23)
+        rand_x = random.uniform(-22, 22)
+        rand_z = random.uniform(-22, 22)
         rand_rot = random.uniform(-np.pi, np.pi)
 
         if debut == 0 :
@@ -196,6 +235,7 @@ class ViewerGL:
 
         global T
         global Vie
+        global Vitesse
 
         
         def centrer_cam () :
@@ -210,8 +250,6 @@ class ViewerGL:
         if glfw.KEY_W in self.touch and self.touch[glfw.KEY_W] > 0:
             self.objs[0].transformation.translation += \
                 pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[0].transformation.rotation_euler), pyrr.Vector3([0, 0, 0.2]))
-            #self.objs[0].transformation.translation += \
-            #    pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[0].transformation.rotation_euler), pyrr.Vector3([0, 0.01, 0]))
             centrer_cam()
 
         if glfw.KEY_S in self.touch and self.touch[glfw.KEY_S] > 0:
@@ -292,6 +330,7 @@ class ViewerGL:
                     self.objs[2].transformation.rotation_euler[pyrr.euler.index().yaw] += rand_rot
 
                     Vie -= 1
+                    Vitesse += 0.04
 
                     if Vie <= 0 :
                         self.objs[2].visible = False
