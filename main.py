@@ -30,7 +30,7 @@ def main():
     tr.translation.y = -np.amin(m.vertices, axis=0)[1]
     tr.translation.z = -3
     tr.rotation_center.y = np.pi/2
-    tr.rotation_center.z = 1
+    #tr.rotation_center.z = 1
     texture = glutils.load_texture('couleur_perso.jpg')
     o = Object3D(m.load_to_gpu(), m.get_nb_triangles(), program3d_id, texture, tr)
     viewer.add_object(o)
@@ -98,9 +98,9 @@ def main():
     for k in range(0,len(liste)):
         if liste[k][1] == 0 and i == 0:
             i=1
-            viewer.collisions[0].append(liste[k]) #p1
+            viewer.collisions[1].append(liste[k]) #p1
         if i == 1 and liste[k][1] == 0:
-            viewer.collisions[1].append(liste[k]) #p2
+            viewer.collisions[0].append(liste[k]) #p2
     texture = glutils.load_texture('Slime2.jpg')
     o = Object3D(m.load_to_gpu(), m.get_nb_triangles(), program3d_id, texture, Transformation3D())
     viewer.add_object(o)
@@ -136,9 +136,9 @@ def main():
     for k in range(0,len(liste)):
         if liste[k][1] == 0 and i == 0:
             i=1
-            viewer.collisions[0].append(liste[k]) #p1
+            viewer.collisions[1].append(liste[k]) #p1
         if i == 1 and liste[k][1] == 0:
-            viewer.collisions[1].append(liste[k]) #p2
+            viewer.collisions[0].append(liste[k]) #p2
     texture = glutils.load_texture('Slime2.jpg')
     o = Object3D(m.load_to_gpu(), m.get_nb_triangles(), program3d_id, texture, Transformation3D())
     viewer.add_object(o)

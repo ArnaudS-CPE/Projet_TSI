@@ -375,11 +375,11 @@ class ViewerGL:
                     direct = [p2.x -q2.x , p2.z - q2.z]
                     if glfw.KEY_W in self.touch and self.touch[glfw.KEY_W] > 0 and valRenz == True:
                         self.objs[0].transformation.translation += \
-                            pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[0].transformation.rotation_euler), pyrr.Vector3([0, 0,-0.15]))
+                            pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[0].transformation.rotation_euler), pyrr.Vector3([0, 0,-0.4]))
                         valRenz = False
                     if glfw.KEY_S in self.touch and self.touch[glfw.KEY_S] > 0 and valRens == True: 
                         self.objs[0].transformation.translation -= \
-                            pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[0].transformation.rotation_euler), pyrr.Vector3([0, 0, -0.15]))
+                            pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[0].transformation.rotation_euler), pyrr.Vector3([0, 0, -0.4]))
                         valRens = False
                     if glfw.KEY_D in self.touch and self.touch[glfw.KEY_D] > 0 and valRend == True: 
                         self.objs[0].transformation.translation += \
