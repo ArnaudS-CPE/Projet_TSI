@@ -411,27 +411,3 @@ class ViewerGL:
     
         if tir== True:
             self.objs[13].visible = True
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        #if glfw.KEY_SPACE in self.touch and self.touch[glfw.KEY_SPACE] > 0:
-        #    self.cam.transformation.rotation_euler = self.objs[0].transformation.rotation_euler.copy() 
-        #    self.cam.transformation.rotation_euler[pyrr.euler.index().yaw] += np.pi
-        #    self.cam.transformation.rotation_center = self.objs[0].transformation.translation + self.objs[0].transformation.rotation_center
-        #    self.cam.transformation.translation = self.objs[0].transformation.translation + pyrr.Vector3([0, 1, 5])
-
-    
-
