@@ -10,8 +10,8 @@ from time import sleep
 
 
 T = 0
-Vie = 4
-Vitesse = 0.04
+Vie = 4 # Nombre de vies de l'ennemi
+Vitesse = 0.04 # Vitesse de départ de l'ennemi
 tir = False
 
 valRenz = True
@@ -22,8 +22,7 @@ direct = [0,0]
 pointp=[]
 
 def onSegment(p, q, r):
-    if ( (q.x <= max(p.x, r.x)) and (q.x >= min(p.x, r.x)) and
-        (q.z <= max(p.z, r.z)) and (q.z >= min(p.z, r.z))):
+    if ( (q.x <= max(p.x, r.x)) and (q.x >= min(p.x, r.x)) and (q.z <= max(p.z, r.z)) and (q.z >= min(p.z, r.z))):
         return True
     return False
 
@@ -109,7 +108,7 @@ class ViewerGL:
                 obj.draw()
  
             self.init_ennemi(debut)
-            self.update_key(debut)
+            self.update_key()
 
             debut+=1
 
@@ -261,7 +260,7 @@ class ViewerGL:
 
 
 
-    def update_key(self, debut):
+    def update_key(self):
 
         global T
         global Vie
