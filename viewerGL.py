@@ -14,19 +14,19 @@ Vie = 4
 Vitesse = 0.04
 tir = False
 
-
 valRenz = True
 valRens = True
 valRenq = True
 valRend = True
 direct = [0,0]
-
 pointp=[]
+
 def onSegment(p, q, r):
     if ( (q.x <= max(p.x, r.x)) and (q.x >= min(p.x, r.x)) and
         (q.z <= max(p.z, r.z)) and (q.z >= min(p.z, r.z))):
         return True
     return False
+
 def orientation(p, q, r):  
     val = (float(q.z - p.z) * (r.x - q.x)) - (float(q.x - p.x) * (r.z - q.z))
     if (val > 0):
@@ -54,15 +54,16 @@ def doIntersect(p1,q1,p2,q2):
         return True
     return False
 
+
 class Point:
     def __init__(self, x, z):
         self.x = x
         self.z = z 
 
 
-
 class ViewerGL:
     def __init__(self):
+        # initialisation de la liste des collisions
         self.collisions=[[],[]]
         # initialisation de la librairie GLFW
         glfw.init()
@@ -89,44 +90,26 @@ class ViewerGL:
         self.touch = {}
 
 
-
-
-
-
-
-
     def run(self):
 
         global Vitesse
-
         debut = 0
         compteur = 0
         L = [0, 0]
-
-        vie = 5
 
         # boucle d'affichage
         while not glfw.window_should_close(self.window):
             # nettoyage de la fenêtre : fond et profondeur
             GL.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT)
             
-            #self.update_key(debut)
-
             for obj in self.objs:
                 GL.glUseProgram(obj.program)
                 if isinstance(obj, Object3D):
                     self.update_camera(obj.program)
-                    
                 obj.draw()
  
-
-
             self.init_ennemi(debut)
-
             self.update_key(debut)
-
-
-
 
             debut+=1
 
@@ -193,13 +176,11 @@ class ViewerGL:
             if (abs(self.objs[2].transformation.translation[0]) > 23) or (abs(self.objs[2].transformation.translation[2]) > 23) :
                 self.objs[2].transformation.rotation_euler[pyrr.euler.index().yaw] += np.pi
 
-
             # Rotation des coeurs
             self.objs[9].transformation.rotation_euler[pyrr.euler.index().yaw] += 0.03
             self.objs[10].transformation.rotation_euler[pyrr.euler.index().yaw] += 0.03
             self.objs[11].transformation.rotation_euler[pyrr.euler.index().yaw] += 0.03
             self.objs[12].transformation.rotation_euler[pyrr.euler.index().yaw] += 0.03
-
 
             # changement de buffer d'affichage pour éviter un effet de scintillement
             glfw.swap_buffers(self.window)
@@ -212,8 +193,6 @@ class ViewerGL:
         if key == glfw.KEY_ESCAPE and action == glfw.PRESS:
             glfw.set_window_should_close(win, glfw.TRUE)
         self.touch[key] = action
-
-
 
 
     def init_ennemi (self, debut) :
@@ -237,8 +216,6 @@ class ViewerGL:
                 pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[0].transformation.rotation_euler), pyrr.Vector3([rand_x+1.5, 0, rand_z]))
             
         self.objs[8].bottomLeft = np.array([0.6, 0.2], np.float32)
-
-
 
     
     def add_object(self, obj):
@@ -286,7 +263,6 @@ class ViewerGL:
 
     def update_key(self, debut):
 
-
         global T
         global Vie
         global Vitesse
@@ -296,39 +272,35 @@ class ViewerGL:
         global valRenz ; global valRens
         global valRenq ; global valRend
         global tir
-
         
         def centrer_cam () :
-            #self.cam.transformation.rotation_euler = self.objs[0].transformation.rotation_euler.copy() 
-            #self.cam.transformation.rotation_euler[pyrr.euler.index().yaw] += np.pi
             self.cam.transformation.rotation_center = self.objs[0].transformation.translation + self.objs[0].transformation.rotation_center
             self.cam.transformation.translation = self.objs[0].transformation.translation + pyrr.Vector3([0, 1, 5])
 
         pointp = [self.objs[0].transformation.translation.x,self.objs[0].transformation.translation.z]
 
-        centrer_cam()
+        centrer_cam() # on veut que la caméra soit outjours centrée sur le personnage
 
-
-        if glfw.KEY_W in self.touch and self.touch[glfw.KEY_W] > 0 and valRenz == True:
+        if glfw.KEY_W in self.touch and self.touch[glfw.KEY_W] > 0 and valRenz == True: # Avant
             self.objs[0].transformation.translation += \
                 pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[0].transformation.rotation_euler), pyrr.Vector3([0, 0, 0.3]))
             valRens = True
             centrer_cam()
 
-        if glfw.KEY_S in self.touch and self.touch[glfw.KEY_S] > 0 and valRens == True: 
+        if glfw.KEY_S in self.touch and self.touch[glfw.KEY_S] > 0 and valRens == True: # Arrière
             self.objs[0].transformation.translation -= \
                 pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[0].transformation.rotation_euler), pyrr.Vector3([0, 0, 0.3]))
             valRenz = True
             centrer_cam()
 
-        if glfw.KEY_A in self.touch and self.touch[glfw.KEY_A] > 0 and valRenq == True:
+        if glfw.KEY_A in self.touch and self.touch[glfw.KEY_A] > 0 and valRenq == True: # Gauche
             self.objs[0].transformation.translation += \
                 pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[0].transformation.rotation_euler), pyrr.Vector3([0.1, 0, 0]))
             valRend = True
             valRenz = True
             centrer_cam()
 
-        if glfw.KEY_D in self.touch and self.touch[glfw.KEY_D] > 0 and valRend == True: 
+        if glfw.KEY_D in self.touch and self.touch[glfw.KEY_D] > 0 and valRend == True: # Droite
             self.objs[0].transformation.translation -= \
                 pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[0].transformation.rotation_euler), pyrr.Vector3([0.1, 0, 0]))
             valRenq = True
@@ -336,37 +308,30 @@ class ViewerGL:
             centrer_cam()
 
 
-
-
-        if glfw.KEY_UP in self.touch and self.touch[glfw.KEY_UP] > 0:
+        if glfw.KEY_UP in self.touch and self.touch[glfw.KEY_UP] > 0: # Caméra bas
             if self.cam.transformation.rotation_euler[pyrr.euler.index().roll] > -np.pi/10: #limites du déplacement de la caméra
                 self.cam.transformation.rotation_euler[pyrr.euler.index().roll] -= 0.04
-                #self.objs[0].transformation.rotation_euler[pyrr.euler.index().roll] -= 0.04
 
-        if glfw.KEY_DOWN in self.touch and self.touch[glfw.KEY_DOWN] > 0:
+        if glfw.KEY_DOWN in self.touch and self.touch[glfw.KEY_DOWN] > 0: # Caméra haut
             if self.cam.transformation.rotation_euler[pyrr.euler.index().roll] < np.pi/3: #limites du déplacement de la caméra
                 self.cam.transformation.rotation_euler[pyrr.euler.index().roll] += 0.04
-                #self.objs[0].transformation.rotation_euler[pyrr.euler.index().roll] += 0.04
 
-        if glfw.KEY_LEFT in self.touch and self.touch[glfw.KEY_LEFT] > 0:
+        if glfw.KEY_LEFT in self.touch and self.touch[glfw.KEY_LEFT] > 0: # Rotation caméra + personnage gauche
             self.cam.transformation.rotation_euler[pyrr.euler.index().yaw] -= 0.04
             self.objs[0].transformation.rotation_euler[pyrr.euler.index().yaw] -= 0.04
-            #self.objs[6].transformation.rotation_euler[pyrr.euler.index().yaw] -= 0.04
 
-        if glfw.KEY_RIGHT in self.touch and self.touch[glfw.KEY_RIGHT] > 0:
+        if glfw.KEY_RIGHT in self.touch and self.touch[glfw.KEY_RIGHT] > 0: # Rotation caméra + personnage gauche
             self.cam.transformation.rotation_euler[pyrr.euler.index().yaw] += 0.04
             self.objs[0].transformation.rotation_euler[pyrr.euler.index().yaw] += 0.04
-            #self.objs[6].transformation.rotation_euler[pyrr.euler.index().yaw] += 0.04
-
 
 
         def collision(posX,posZ,collisions):
+
             global valRenz
             global valRens
             global valRenq
             global valRend
             global direct 
-
         
             for k in range(0,len(collisions[0])):
                 p1 = Point(collisions[0][k][0],collisions[0][k][2])
@@ -395,28 +360,22 @@ class ViewerGL:
         collision(self.objs[0].transformation.translation.x,self.objs[0].transformation.translation.z,self.collisions)
 
 
-
-
-
-
-        # Tir
-        if glfw.KEY_E in self.touch and self.touch[glfw.KEY_E] > 0:
+        if glfw.KEY_E in self.touch and self.touch[glfw.KEY_E] > 0: # Tir
             self.objs[13].visible = False
             tir = True
             # Fréquence de tir
             freq = True
-            if ((glfw.get_time() - T) < 0.2) : # On test la durée entre 2 tirs
+            if ((glfw.get_time() - T) < 0.1) : # On test la durée entre 2 tirs
                 freq = False
             T = glfw.get_time()
             self.objs[13].transformation.translation = self.objs[0].transformation.translation.copy()
             self.objs[13].transformation.rotation_euler = self.objs[0].transformation.rotation_euler.copy()
 
-            #on calcul les cooordonnées de l'ennemi par rapport au personnage
+            # On calcul les cooordonnées de l'ennemi par rapport au personnage
             nouv_coord = [self.objs[2].transformation.translation[0] - self.objs[0].transformation.translation[0], self.objs[2].transformation.translation[2] - self.objs[0].transformation.translation[2]]
 
             # On calcul l'angle de l'ennemi par rapport au personnage
             angle_ennemi = np.arctan(nouv_coord[0]/nouv_coord[1])
-
             angle_tir = self.objs[0].transformation.rotation_euler[2]
             if angle_tir > 0 :
                 while angle_tir > np.pi/2 :
@@ -425,18 +384,8 @@ class ViewerGL:
                 while angle_tir < -np.pi/2 :
                     angle_tir += np.pi/2
 
-            #print("tir : ", angle_tir)
-            #print("ennemi : ", angle_ennemi)
-
-            #if freq == True :
-                #print("/////////")
-                #print("tir")
-            
-
-            if (abs(angle_tir) > abs(angle_ennemi)-0.2) and (abs(angle_tir) < abs(angle_ennemi)+0.2) :
-                
+            if (abs(angle_tir) > abs(angle_ennemi)-0.2) and (abs(angle_tir) < abs(angle_ennemi)+0.2) : # Condition de touche
                 if freq == True :
-                    #print("Touché !")
                     rand_rot = random.uniform(-np.pi, np.pi)
                     self.objs[2].transformation.rotation_euler[pyrr.euler.index().yaw] += rand_rot
 
@@ -446,10 +395,11 @@ class ViewerGL:
                     if Vie <= 0 :
                         self.objs[2].visible = False
 
-        if tir==True:
+        if tir==True: # Déplacement du projectile
             self.objs[13].transformation.translation += \
                 pyrr.matrix33.apply_to_vector(pyrr.matrix33.create_from_eulers(self.objs[13].transformation.rotation_euler), pyrr.Vector3([0, 0, 3]))
 
+        # Diminution du nombre de vies et apparition du message de victoire
         if Vie == 3 :
             self.objs[12].visible = False
         if Vie == 2 :
@@ -460,7 +410,6 @@ class ViewerGL:
             self.objs[9].visible = False
             self.objs[8].bottomLeft = np.array([-0.6, -0.2], np.float32)  
     
-
         if tir== True:
             self.objs[13].visible = True
 

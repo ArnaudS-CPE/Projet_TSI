@@ -5,7 +5,7 @@ from cpe3d import Object3D, Camera, Transformation3D, Text
 import numpy as np
 import OpenGL.GL as GL
 import pyrr
-import random
+
 
 
 def main():
@@ -19,9 +19,6 @@ def main():
     programGUI_id = glutils.create_program_from_file('gui.vert', 'gui.frag')
 
 
-
-
-
     # Personnage
     m = Mesh.load_obj('perso2.obj')
     m.normalize()
@@ -30,11 +27,9 @@ def main():
     tr.translation.y = -np.amin(m.vertices, axis=0)[1]
     tr.translation.z = -3
     tr.rotation_center.y = np.pi/2
-    #tr.rotation_center.z = 1
     texture = glutils.load_texture('couleur_perso.jpg')
     o = Object3D(m.load_to_gpu(), m.get_nb_triangles(), program3d_id, texture, tr)
     viewer.add_object(o)
-
 
 
     # Sol
@@ -49,21 +44,15 @@ def main():
     viewer.add_object(o)
 
 
-
-
     # Ennemi
     m = Mesh.load_obj('stegosaurus.obj')
     m.normalize()
     m.apply_matrix(pyrr.matrix44.create_from_scale([3, 3, 3, 1]))
     tr = Transformation3D()
     tr.translation.y = -np.amin(m.vertices, axis=0)[1]
-    #tr.translation.z = -3
-    #tr.rotation_center.z = 1
     texture = glutils.load_texture('stegosaurus.jpg')
     o = Object3D(m.load_to_gpu(), m.get_nb_triangles(), program3d_id, texture, tr)
     viewer.add_object(o)
-
-
 
 
     # Murs
@@ -144,8 +133,6 @@ def main():
     viewer.add_object(o)
 
 
-
-
     # Toit
     p0, p1, p2, p3= [-25, 10, -25], [25, 10, -25], [25, 10, 25], [-25, 10, 25]
     n, c = [0, 1, 0], [1, 1, 1]
@@ -155,15 +142,6 @@ def main():
     texture = glutils.load_texture('FIREBLU2.jpg')
     o = Object3D(m.load_to_gpu(), m.get_nb_triangles(), program3d_id, texture, Transformation3D())
     viewer.add_object(o)
-
-    # Hitbox
-    m = Mesh.load_obj('cubax.obj')
-    m.normalize()
-    m.apply_matrix(pyrr.matrix44.create_from_scale([2, 2, 2, 1]))
-    tr = Transformation3D()
-    tr.translation.y = -np.amin(m.vertices, axis=0)[1]
-    tr.translation.z = -10
-    tr.rotation_center.z = 0.2
 
 
     # Texte victoire
@@ -182,29 +160,11 @@ def main():
     for i in range(4):
         tr = Transformation3D()
         tr.translation.y = -np.amin(m.vertices, axis=0)[1] + 3
-        #tr.translation.z = -3
-        #tr.rotation_center.y = np.pi/2
-        #tr.rotation_center.z = 1
         o = Object3D(vao, m.get_nb_triangles(), program3d_id, texture, tr)
         viewer.add_object(o)
 
 
-
-
-
-
-    # m = Mesh.load_obj('boule.obj')
-    # m.normalize()
-    # m.apply_matrix(pyrr.matrix44.create_from_scale([0.2, 0.2, 0.2, 1]))
-    # tr = Transformation3D()
-    # tr.translation.y = 0.8
-    # tr.translation.z = -5
-    # tr.rotation_center.z = 1
-    # texture = glutils.load_texture('stegosaurus.jpg')
-    # o = Object3D(m.load_to_gpu(), m.get_nb_triangles(), program3d_id, texture, tr)
-    # viewer.add_object(o)
-
-
+    # Projectile
     m = Mesh.load_obj('boule.obj')
     m.normalize()
     m.apply_matrix(pyrr.matrix44.create_from_scale([0.2, 0.2, 0.2, 1]))
